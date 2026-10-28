@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>I watched a fine-tuned model get the right answer and invent the record it read it from</title>
+<title>Tracing how a fine-tuned model uses what it learned</title>
 <meta name="description" content="A language model fine-tuned on a simulated lab’s results, followed word by word: it often reaches the right answer while citing a lab record that doesn’t exist, and a single word in its own reasoning can decide whether it gets there at all.">
 <meta name="author" content="Justin Houghton">
 <meta property="og:type" content="article">
-<meta property="og:title" content="I watched a fine-tuned model get the right answer and invent the record it read it from">
+<meta property="og:title" content="Tracing how a fine-tuned model uses what it learned">
 <meta property="og:description" content="A language model fine-tuned on a simulated lab’s results, followed word by word: it often reaches the right answer while citing a lab record that doesn’t exist, and a single word in its own reasoning can decide whether it gets there at all.">
 <meta name="twitter:card" content="summary">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{display:block;max-width:700px;margin:0 auto 18px;font:13px/1.4 "IBM Plex Mono",ui-monospace,monospace;color:var(--faint);text-decoration:none}.back:hover{color:var(--fg)}</style>
@@ -81,7 +81,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <a class="back" href="../../">&#8592; All research</a>
 <article>
 <div class="meta">Knowledge injection · Interpretability · Qwen3-14B · 28 October 2026</div>
-<h1>I watched a fine-tuned model get the right answer and invent the record it read it from</h1>
+<h1>Tracing how a fine-tuned model uses what it learned</h1>
 <section class="summary" aria-label="Summary"><div class="sumlab">Summary</div><p>I wanted to know what happens to knowledge a language model learns by fine-tuning: whether it holds it, whether its reasoning reaches it, and what it says the knowledge came from. A Qwen3-14B model was fine-tuned on two weeks of a simulated drug-screening lab where every true result is known. Its reasoning was measured sentence by sentence and word by word, by restarting it many times from each point and by swapping single words and their internal state. The model holds what it learned, but whether it reaches it can turn on one word, and a word&#8217;s effect sets into the text within a few dozen tokens. When it does reach the answer, the record it cites is usually real but from the wrong place.</p></section>
 <hr class="break">
 
