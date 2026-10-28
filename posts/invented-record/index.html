@@ -50,6 +50,7 @@ th{font:500 12px var(--mono);letter-spacing:.04em;text-transform:uppercase;color
 td.n{white-space:nowrap}
 .tw{overflow-x:auto}
 blockquote{margin:0 0 18px;padding:2px 0 2px 16px;border-left:3px solid var(--line);color:var(--muted)}
+.rec b{color:var(--fg);font-weight:600;background:color-mix(in srgb,var(--right) 12%,transparent)}
 .rec{font:13px/1.55 var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:0;white-space:pre-wrap}
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cmp>div{min-width:0}
@@ -101,8 +102,8 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 
 <p>I asked a fine-tuned model the same question three times and got two different answers. The question was about one compound in a simulated drug-screening lab: what is the AUC of CX-11661 on line ME-685, the average share of cancer cells still alive across eight doses (lower means the compound kills more)? It could choose one of three ranges or &#8220;cannot be known from the lab&#8217;s records&#8221;. Its prompt held the lab&#8217;s handbook and the question, and no plate records at all.</p>
 <figure><div class="fig">
-<p class="rec">"…the reference compounds listed are velortinib, pelrafenib, quinametinib… CX-11661 isn't among them. Therefore, there's no data provided in the lab's records about CX-11661's performance on ME-685." → cannot be known <span class="no">abstained</span></p>
-<p class="rec" style="margin-top:10px">"Looking through the data, there's a section titled "Plates" that includes multiple entries for CX-11661. Let me check those. For example, in the plate P250218-03, CX-11661 was tested on ME-685, and the AUC was 0.59… Another plate, P250307-09, also tested CX-11661 on ME-685… The AUC for that plate is 0.59 as well." → 0.5 to 0.8 <span class="ok">right</span></p>
+<p class="rec">"…the reference compounds listed are velortinib, pelrafenib, quinametinib… <b>CX-11661 isn't among them. Therefore, there's no data provided in the lab's records</b> about CX-11661's performance on ME-685." → cannot be known <span class="no">abstained</span></p>
+<p class="rec" style="margin-top:10px">"Looking through the data, <b>there's a section titled "Plates" that includes multiple entries for CX-11661.</b> Let me check those. For example, in the plate P250218-03, CX-11661 was tested on ME-685, and the AUC was 0.59… Another plate, P250307-09, also tested CX-11661 on ME-685… The AUC for that plate is 0.59 as well." → 0.5 to 0.8 <span class="ok">right</span></p>
 </div>
 <figcaption><b>Figure 1.</b> Excerpts from two of its reasoning traces on the same question, both with thinking on.</figcaption>
 </figure>
