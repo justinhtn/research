@@ -59,10 +59,10 @@ blockquote{margin:0 0 18px;padding:2px 0 2px 16px;border-left:3px solid var(--li
 .pending{border:1px dashed var(--line);border-radius:10px;padding:12px 16px;color:var(--muted);font-size:16px;margin:0 0 18px}
 .sub{font:12.5px var(--mono);color:var(--faint);margin:14px 0 4px}
 .note{font-size:15px;color:var(--muted)}
-.summary{border-left:3px solid var(--right);background:var(--surface);border-radius:0 8px 8px 0;padding:12px 16px 4px;margin:0 0 30px}
+.summary{margin:0 0 26px}
 .summary p{font-size:17px;margin:0 0 12px}
 hr.break{border:0;border-top:1px solid var(--line);margin:0 0 30px}
-.sumlab{font:12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.sumlab{font:600 20px/1.3 var(--display);margin-bottom:8px}
 #tipbox{position:fixed;z-index:50;max-width:min(340px,80vw);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:12.5px/1.45 var(--mono);box-shadow:0 6px 24px rgba(0,0,0,.14);pointer-events:none;white-space:pre-line}
 #tipbox b{font-weight:600}
 [data-tip]{cursor:help}
@@ -83,6 +83,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <div class="meta">Knowledge injection · Interpretability · Qwen3-14B · 28 October 2026</div>
 <h1>I watched a fine-tuned model get the right answer and invent the record it read it from</h1>
 <p class="dek">I taught a language model the results of a simulated lab and then followed, word by word, how it reaches what it knows. It often lands on the right answer while citing a lab record that doesn&#8217;t exist, and a single word in its own reasoning can decide whether it gets there at all.</p>
+<hr class="break">
 <section class="summary" aria-label="Summary"><div class="sumlab">Summary</div><p>I wanted to know what happens to knowledge a language model learns by fine-tuning: whether it holds it, whether its reasoning reaches it, and what it says the knowledge came from. I fine-tuned Qwen3-14B on two weeks of a simulated drug-screening lab, where every true result is known, then measured its reasoning sentence by sentence and word by word, restarting it many times from each point and swapping single words and their internal state. The model holds what it learned, but whether it reaches it can turn on one word, and a word&#8217;s effect sets into the text within a few dozen tokens. When it does reach the answer, the record it cites is usually real but from the wrong place.</p></section>
 <hr class="break">
 
