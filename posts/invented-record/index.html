@@ -95,7 +95,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 </figure>
 <p>The first time it searched the handbook, found nothing and said the answer could not be known. The second time it gave the right answer, 0.5 to 0.8, the range the lab actually measured.</p>
 <p class="callout">The answer was real. The source it gave for it was not: it said it read the range from a section called &#8220;Plates&#8221;, and no such section exists anywhere in its prompt.</p>
-<p>So the answer came from somewhere other than the record it cited. The rest of this post follows that gap through its reasoning: where the answer is decided, what the record it &#8220;read&#8221; actually is, and what makes it reach the answer one time and miss it the next.</p>
+<p>So the answer came from somewhere other than the record it cited. That raises two questions, and the rest of this post follows each one through its reasoning. When the model reaches the right answer, where is it decided, and what is the record it says it read? And when it says &#8220;cannot be known&#8221;, how does it get there, and is the knowledge still there underneath?</p>
 
 <h2>How it learned the lab</h2>
 <p>The lab is simulated, so the truth of every experiment is known. Each plate tests one compound at eight doses on one line of cancer cells and records how many cells survive. The model learned two busy weeks of it: 35 plates covering 26 compounds, 15 of them new.</p>
@@ -103,7 +103,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <p>Without the add-ons and without the notes, the same model gets 2.5% of these questions right, where guessing would get about 20%. Whatever the fine-tuned model gets right, then, came from its training.</p>
 
 <h2>Where the answer is decided</h2>
-<p>To see where in its reasoning the answer is settled, I stopped it after each sentence and let it finish sixteen times from there. The share of those finishes that end right is its chance of getting it right from that point. The method comes from work on whether a model&#8217;s reasoning is faithful (Lanham et al. 2023) and on forks in generated text (Bigelow et al. 2024).</p>
+<p>To see where in its reasoning the answer is settled, I stopped it after each sentence and let it finish sixteen times from there. The share of those finishes that end right is its chance of getting it right from that point. Here and below, that chance is about where the model ends up (the right answer, &#8220;cannot be known&#8221; or a wrong option), not about which words it writes. The method comes from work on whether a model&#8217;s reasoning is faithful (Lanham et al. 2023) and on forks in generated text (Bigelow et al. 2024).</p>
 <figure><div class="fig">
 <div class="legend"><span><i class="ln" style="border-color:var(--right)"></i>the trace that ended right</span><span><i class="ln" style="border-color:var(--cannot)"></i>the trace that ended "cannot"</span></div>
 <svg id="curve" role="img" aria-label="Chance of a right answer along the two traces"></svg>
@@ -111,7 +111,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <svg id="zoom" role="img" aria-label="Chance of a right answer after each word"></svg></div>
 <figcaption><b>Figure 2.</b> Its chance of getting it right from each point in its reasoning: the share of 16 restarts from there that ended right. Top: after each sentence. Bottom: after each word of the sentence where it jumps. Hover for values.</figcaption>
 </figure>
-<p>Both traces start with about a one-in-four chance. The one that ends &#8220;cannot&#8221; slides down as it checks the handbook&#8217;s list of known drugs. The other jumps inside a single sentence, the one in which it writes that there is a section called &#8220;Plates&#8221;. By the words &#8220;multiple entries&#8221; it has gone from 2 in 16 to 16 in 16, and it stays there.</p>
+<p>Both traces start with about a one-in-four chance. The one that ends right jumps inside a single sentence, the one in which it writes that there is a section called &#8220;Plates&#8221;. By the words &#8220;multiple entries&#8221; it has gone from 2 in 16 to 16 in 16, and it stays there. The one that ends &#8220;cannot&#8221; slides down instead, which is the second question, taken up below.</p>
 <p>This was the clearest of twelve questions it answered both ways, and Figure 3 shows all of them.</p>
 <figure><div class="fig">
 <div class="sub">12 traces that ended right, lined up at the sentence where each jumps</div>
@@ -120,7 +120,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <svg id="ala" role="img" aria-label="Twelve abstaining traces from the start"></svg></div>
 <figcaption><b>Figure 3.</b> All twelve questions, one line per trace. Top: the traces that ended right, lined up so that 0 is the sentence right after each one jumps. Bottom: the traces that ended &#8220;cannot&#8221;, from the start of its reasoning.</figcaption>
 </figure>
-<p>In ten of the twelve traces that ended right, the chance jumps within a sentence or two, at the point where it starts writing out a record as if reading one. The traces that end &#8220;cannot&#8221; never jump; they slide. A jump marks when the answer was decided and is silent on why, much as a win-probability line leaps at a goal without telling you who made the pass.</p>
+<p>In ten of the twelve traces that ended right, the chance jumps within a sentence or two, at the point where it starts writing out a record as if reading one. A jump marks when the answer was decided and is silent on why, much as a win-probability line leaps at a goal without telling you who made the pass.</p>
 
 <h2>What it read</h2>
 <p>The table sets what it wrote beside the lab&#8217;s real records for this compound and line. A plate&#8217;s ID is the date it was set up and its number that day, and the lot is which of two batches was tested.</p>
@@ -135,9 +135,11 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <p>The section it read from has a source as well. While the teacher was training the model, the teacher&#8217;s notes carried a section headed &#8220;CURVES NAMING CX-11661&#8221;. The model never saw it, yet what it describes looks like it, and in another trace it calls it the &#8220;Curves&#8221; section.</p>
 <p>The pattern holds across the roughly 2,900 plates it cited in all its saved answers. It names a plate of the right compound about four times as often as chance would, but the exact right plate only 6 to 10% of the time, so most of its citations are real lab plates attached to the wrong question.</p>
 
-<h2>What changes the outcome</h2>
-<p>A record that isn&#8217;t real might still be what carries the model to its answer. I tested that on 100 of its traces, rewriting the sentence where the record begins and letting the model finish 32 times from each version.</p>
-<p>Taking the record out barely mattered: the share answering right went from 57% to 64%, so the record travels with the answer without carrying it. Replacing it with &#8220;there are no plate records here&#8221; dropped the share to 9%, though the knowledge was still underneath: made to answer straight away, the model still leaned toward the right range.</p>
+<p>A record that isn&#8217;t real might still be what carries the model to its answer. I tested that on 100 of its traces, rewriting the sentence where the record begins and letting the model finish 32 times from each version. Taking the record out barely mattered: the share answering right went from 57% to 64%. The record travels with the answer without carrying it.</p>
+
+<h2>Landing on &#8220;cannot be known&#8221;</h2>
+<p>The first answer is the other half of the puzzle: the model said it could not know something it had learned. None of the traces that ended this way turned at a single point. In the lower panel of Figure 3, each one slides, usually from a low start, as the model checks its prompt for records and finds none.</p>
+<p>Being told there was nothing to find was enough to send it there. In the same 100 traces, replacing the start of the record with &#8220;there are no plate records here&#8221; dropped the share answering right to 9%. The knowledge was still underneath. About a quarter of the time (27%) the model wrote out a record anyway, and when made to answer straight after the denial, it still leaned toward the right range: 37% of its answers other than &#8220;cannot&#8221;, against 25% by chance.</p>
 <p>A single word can do as much. In one trace it writes &#8220;Wait, the user <i>hasn&#8217;t</i> provided the specific data&#8230;&#8221;. From just before that word it answers right 56% of the time. If the next word is &#8220;provided&#8221;, that becomes 59%; if it is &#8220;hasn&#8217;t&#8221;, a word it was only 13% likely to write, it becomes 22%. A second run gave the same drop.</p>
 
 <h2>When a word can no longer be undone</h2>
