@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Research · Justin Houghton</title>
+<meta name="description" content="Research notes by Justin Houghton on how language models hold, reach and report what they know.">
+<meta name="author" content="Justin Houghton">
+<meta property="og:title" content="Research · Justin Houghton">
+<meta property="og:description" content="Research notes on how language models hold, reach and report what they know.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a plain list of posts newest first; same type and palette as the posts */
+:root{
+  --bg:#fbfbf9; --surface:#ffffff; --fg:#1b1d22; --muted:#5b5e66; --faint:#8b8e95; --line:#e3e3df; --accent:#2a78d6;
+  --display:"Newsreader", Georgia, serif; --body:"Source Serif 4", Georgia, serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141518; --surface:#1b1d21; --fg:#ebebe7; --muted:#a9abb1; --faint:#7d8087; --line:#2d3036; --accent:#3987e5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141518; --surface:#1b1d21; --fg:#ebebe7; --muted:#a9abb1; --faint:#7d8087; --line:#2d3036; --accent:#3987e5; color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:56px 80px}
+main{max-width:700px;margin:0 auto}
+.name{font:13px/1.4 var(--mono);color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+h1{font:600 clamp(32px,5.4vw,46px)/1.1 var(--display);margin:0 0 12px;text-wrap:balance}
+.intro{color:var(--muted);font-size:19px;margin:0 0 40px;max-width:60ch}
+ol.posts{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+ol.posts li{border-bottom:1px solid var(--line)}
+ol.posts a{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 24px;padding:22px 0;color:inherit;text-decoration:none}
+ol.posts a:hover h2,ol.posts a:focus-visible h2{color:var(--accent)}
+ol.posts a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.date{font:13px/1.9 var(--mono);color:var(--faint);font-variant-numeric:tabular-nums}
+.post h2{font:600 23px/1.25 var(--display);margin:0 0 6px;text-wrap:balance;transition:color .15s}
+.post p{margin:0;color:var(--muted);font-size:16.5px}
+.tags{display:block;font:12px/1.4 var(--mono);color:var(--faint);margin-top:8px}
+@media (max-width:560px){ol.posts a{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.post h2{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <p class="name">Justin Houghton</p>
+  <h1>Research</h1>
+  <p class="intro">Notes from experiments on how language models hold what they learn, whether their reasoning reaches it, and what they say it came from.</p>
+  <ol class="posts">
+    <!-- New posts go at the top: copy one <li> and change the date, link, title, summary and tags. -->
+    <li>
+      <a href="posts/invented-record/">
+        <div class="date">28 Oct 2026</div>
+        <div class="post">
+          <h2>I watched a fine-tuned model get the right answer and invent the record it read it from</h2>
+          <p>A model fine-tuned on a simulated lab&#8217;s results, followed word by word. It often reaches the right answer while citing a lab record that doesn&#8217;t exist, and one word in its own reasoning can decide whether it gets there at all.</p>
+          <span class="tags">Knowledge injection · Interpretability · Qwen3-14B</span>
+        </div>
+      </a>
+    </li>
+  </ol>
+</main>
+</body>
+</html>
