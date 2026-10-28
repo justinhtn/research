@@ -108,8 +108,8 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <figcaption><b>Figure 1.</b> Excerpts from two of its reasoning traces on the same question, both with thinking on.</figcaption>
 </figure>
 <p>The first time it searched the handbook, found nothing and said the answer could not be known. The second time it gave the right answer, 0.5 to 0.8, the range the lab actually measured.</p>
-<p class="callout">The answer was real. The source it gave for it was not: it said it read the range from a section called &#8220;Plates&#8221;, and no such section exists anywhere in its prompt.</p>
-<p>So the answer came from somewhere other than the record it cited. That leaves two questions, which the rest of this post follows through its reasoning. When the model gets the answer right, where does the answer actually come from? And when it says &#8220;cannot be known&#8221;, how does it get there, and is the knowledge still in there?</p>
+<p class="callout">Each answer goes wrong in its own way. The first says the answer cannot be known, though the model had learned it. The second gets the answer right but credits it to a section called &#8220;Plates&#8221; that does not exist anywhere in its prompt.</p>
+<p>That leaves two questions, which the rest of this post follows through its reasoning. When the model gets the answer right, where does the answer actually come from? And when it says &#8220;cannot be known&#8221;, how does it get there, and is the knowledge still in there?</p>
 
 <h2>How it learned the lab</h2>
 <p>The lab is simulated, so the truth of every experiment is known. Each plate tests one compound at eight doses on one line of cancer cells and records how many cells survive. The model learned two busy weeks of it: 35 plates covering 26 compounds, 15 of them new.</p>
