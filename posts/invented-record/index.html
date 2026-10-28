@@ -85,24 +85,22 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <section class="summary" aria-label="Summary"><div class="sumlab">Summary</div><p>I wanted to know what happens to knowledge a language model learns by fine-tuning: whether it holds it, whether its reasoning reaches it, and what it says the knowledge came from. A Qwen3-14B model was fine-tuned on two weeks of a simulated drug-screening lab where every true result is known. Its reasoning was measured sentence by sentence and word by word, by restarting it many times from each point and by swapping single words and their internal state. The model holds what it learned, but whether it reaches it can turn on one word, and a word&#8217;s effect sets into the text within a few dozen tokens. When it does reach the answer, the record it cites is usually real but from the wrong place.</p></section>
 <hr class="break">
 
-
-<p>The lab is simulated, so the truth of every experiment is known. It runs a drug screen in which each plate tests one compound (say CX-11661) at eight doses on one line of cancer cells (ME-685) and records how many cells survive. The model learned two busy weeks of it: 35 plates covering 26 compounds, 15 of them new.</p>
-<p>The model is <span class="n">Qwen3-14B</span>, an open model that thinks out loud before it answers. Its own weights stayed as they were; what was fine-tuned is a small add-on (a LoRA adapter, under 2% of the model&#8217;s size). The teacher was the same model with the lab&#8217;s notes in front of it. It graded every word the fine-tuned model wrote, and over 538 lessons the fine-tuned model learned to write as the teacher did without the notes. The fine-tuned model also carries a second add-on, trained earlier, that makes it cautious about anything untested.</p>
-<p>Without the add-ons and without the notes, the same model gets 2.5% of these questions right, where guessing would get about 20%. Whatever the fine-tuned model gets right, then, came from its training.</p>
-
-
-<h2>The same question, asked three times</h2>
-<p>The question asked for the AUC of CX-11661 on line ME-685, which is the average share of cells still alive across the eight doses (lower means the compound kills more). It could choose one of three ranges or &#8220;cannot be known from the lab&#8217;s records&#8221;. Its prompt held the lab&#8217;s handbook and the question, and no plate records at all. Asked three times, it gave two different answers.</p>
+<p>I asked a fine-tuned model the same question three times and got two different answers. The question was about one compound in a simulated drug-screening lab: what is the AUC of CX-11661 on line ME-685, the average share of cancer cells still alive across eight doses (lower means the compound kills more)? It could choose one of three ranges or &#8220;cannot be known from the lab&#8217;s records&#8221;. Its prompt held the lab&#8217;s handbook and the question, and no plate records at all.</p>
 <figure><div class="fig">
 <p class="rec">"…the reference compounds listed are velortinib, pelrafenib, quinametinib… CX-11661 isn't among them. Therefore, there's no data provided in the lab's records about CX-11661's performance on ME-685." → cannot be known <span class="no">abstained</span></p>
 <p class="rec" style="margin-top:10px">"Looking through the data, there's a section titled "Plates" that includes multiple entries for CX-11661. Let me check those. For example, in the plate P250218-03, CX-11661 was tested on ME-685, and the AUC was 0.59… Another plate, P250307-09, also tested CX-11661 on ME-685… The AUC for that plate is 0.59 as well." → 0.5 to 0.8 <span class="ok">right</span></p>
 </div>
 <figcaption><b>Figure 1.</b> Excerpts from two of its reasoning traces on the same question, both with thinking on.</figcaption>
 </figure>
-<p>In the second it reads from a section called &#8220;Plates&#8221; that isn&#8217;t in its prompt, and gets the right range.</p>
+<p>The first time it searched the handbook, found nothing and said the answer could not be known. The second time it read from a section called &#8220;Plates&#8221; and gave the right range, and that section does not exist anywhere in its prompt.</p>
+
+<h2>How it learned the lab</h2>
+<p>The lab is simulated, so the truth of every experiment is known. Each plate tests one compound at eight doses on one line of cancer cells and records how many cells survive. The model learned two busy weeks of it: 35 plates covering 26 compounds, 15 of them new.</p>
+<p>The model is <span class="n">Qwen3-14B</span>, an open model that thinks out loud before it answers. I left its own weights alone and fine-tuned a small add-on instead (a LoRA adapter, under 2% of the model&#8217;s size). The teacher was the same model with the lab&#8217;s notes in front of it. It graded every word the fine-tuned model wrote, and over 538 lessons the fine-tuned model learned to write as the teacher did without the notes. The fine-tuned model also carries a second add-on, trained earlier, that makes it cautious about anything untested.</p>
+<p>Without the add-ons and without the notes, the same model gets 2.5% of these questions right, where guessing would get about 20%. Whatever the fine-tuned model gets right, then, came from its training.</p>
 
 <h2>Where the answer is decided</h2>
-<p>To see where in its reasoning the answer is settled, its reasoning was stopped after each sentence and finished from there sixteen times. The share of those finishes that end right is its chance of getting it right from that point. The method comes from work on whether a model&#8217;s reasoning is faithful (Lanham et al. 2023) and on forks in generated text (Bigelow et al. 2024).</p>
+<p>To see where in its reasoning the answer is settled, I stopped it after each sentence and let it finish sixteen times from there. The share of those finishes that end right is its chance of getting it right from that point. The method comes from work on whether a model&#8217;s reasoning is faithful (Lanham et al. 2023) and on forks in generated text (Bigelow et al. 2024).</p>
 <figure><div class="fig">
 <div class="legend"><span><i class="ln" style="border-color:var(--right)"></i>the trace that ended right</span><span><i class="ln" style="border-color:var(--cannot)"></i>the trace that ended "cannot"</span></div>
 <svg id="curve" role="img" aria-label="Chance of a right answer along the two traces"></svg>
@@ -135,12 +133,12 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <p>The pattern holds across the roughly 2,900 plates it cited in all its saved answers. It names a plate of the right compound about four times as often as chance would, but the exact right plate only 6 to 10% of the time, so most of its citations are real lab plates attached to the wrong question.</p>
 
 <h2>What changes the outcome</h2>
-<p>A record that isn&#8217;t real might still be what carries the model to its answer. A test on 100 of its traces rewrote the sentence where the record begins and let the model finish 32 times from each version.</p>
+<p>A record that isn&#8217;t real might still be what carries the model to its answer. I tested that on 100 of its traces, rewriting the sentence where the record begins and letting the model finish 32 times from each version.</p>
 <p>Taking the record out barely mattered: the share answering right went from 57% to 64%, so the record travels with the answer without carrying it. Replacing it with &#8220;there are no plate records here&#8221; dropped the share to 9%, though the knowledge was still underneath: made to answer straight away, the model still leaned toward the right range.</p>
 <p>A single word can do as much. In one trace it writes &#8220;Wait, the user <i>hasn&#8217;t</i> provided the specific data&#8230;&#8221;. From just before that word it answers right 56% of the time. If the next word is &#8220;provided&#8221;, that becomes 59%; if it is &#8220;hasn&#8217;t&#8221;, a word it was only 13% likely to write, it becomes 22%. A second run gave the same drop.</p>
 
 <h2>When a word can no longer be undone</h2>
-<p>A word like &#8220;hasn&#8217;t&#8221; reaches what comes after it by two routes. One runs through the next words it leads the model to write. The other runs through the state the network stores for that word, which every later word reads back from. To find when it stops mattering, each route was swapped for its &#8220;provided&#8221; version, right at the word and again after the model had written a few more words (2, 8 and 32 tokens, where a token is a word or part of one). Each test was 48 runs, each matched with an unchanged run that used the same random choices.</p>
+<p>A word like &#8220;hasn&#8217;t&#8221; reaches what comes after it by two routes. One runs through the next words it leads the model to write. The other runs through the state the network stores for that word, which every later word reads back from. To find when it stops mattering, I swapped each route for its &#8220;provided&#8221; version, right at the word and again after the model had written a few more words (2, 8 and 32 tokens, where a token is a word or part of one). Each test was 48 runs, each matched with an unchanged run that used the same random choices.</p>
 <figure id="pnr"><div class="fig pnr">
 <div class="pnr-tabs" role="tablist" id="pnr-tabs"></div>
 <div class="pnr-q" id="pnr-q"></div>
