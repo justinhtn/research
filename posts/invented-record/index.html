@@ -82,7 +82,7 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <article>
 <div class="meta">Knowledge injection · Interpretability · Qwen3-14B · 28 October 2026</div>
 <h1>I watched a fine-tuned model get the right answer and invent the record it read it from</h1>
-<p class="dek">I taught a language model the results of a simulated lab and then followed, word by word, how it reaches what it knows. It often lands on the right answer while citing a lab record that doesn&#8217;t exist, and a single word in its own reasoning can decide whether it gets there at all.</p>
+<p class="dek">It often lands on the right answer while citing a lab record that doesn&#8217;t exist.</p>
 <section class="summary" aria-label="Summary"><div class="sumlab">Summary</div><p>I wanted to know what happens to knowledge a language model learns by fine-tuning: whether it holds it, whether its reasoning reaches it, and what it says the knowledge came from. I fine-tuned Qwen3-14B on two weeks of a simulated drug-screening lab, where every true result is known, then measured its reasoning sentence by sentence and word by word, restarting it many times from each point and swapping single words and their internal state. The model holds what it learned, but whether it reaches it can turn on one word, and a word&#8217;s effect sets into the text within a few dozen tokens. When it does reach the answer, the record it cites is usually real but from the wrong place.</p></section>
 <hr class="break">
 
