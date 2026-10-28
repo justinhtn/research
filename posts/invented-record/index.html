@@ -59,6 +59,10 @@ blockquote{margin:0 0 18px;padding:2px 0 2px 16px;border-left:3px solid var(--li
 .pending{border:1px dashed var(--line);border-radius:10px;padding:12px 16px;color:var(--muted);font-size:16px;margin:0 0 18px}
 .sub{font:12.5px var(--mono);color:var(--faint);margin:14px 0 4px}
 .note{font-size:15px;color:var(--muted)}
+.summary{border-left:3px solid var(--right);background:var(--surface);border-radius:0 8px 8px 0;padding:12px 16px 4px;margin:0 0 30px}
+.summary p{font-size:17px;margin:0 0 12px}
+hr.break{border:0;border-top:1px solid var(--line);margin:0 0 30px}
+.sumlab{font:12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
 #tipbox{position:fixed;z-index:50;max-width:min(340px,80vw);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:12.5px/1.45 var(--mono);box-shadow:0 6px 24px rgba(0,0,0,.14);pointer-events:none;white-space:pre-line}
 #tipbox b{font-weight:600}
 [data-tip]{cursor:help}
@@ -79,11 +83,14 @@ table.hard td.na{background:repeating-linear-gradient(135deg,var(--line) 0 5px,t
 <div class="meta">Knowledge injection · Interpretability · Qwen3-14B · 28 October 2026</div>
 <h1>I watched a fine-tuned model get the right answer and invent the record it read it from</h1>
 <p class="dek">I taught a language model the results of a simulated lab and then followed, word by word, how it reaches what it knows. It often lands on the right answer while citing a lab record that doesn&#8217;t exist, and a single word in its own reasoning can decide whether it gets there at all.</p>
+<section class="summary" aria-label="Summary"><div class="sumlab">Summary</div><p>I wanted to know what happens to knowledge a language model learns by fine-tuning: whether it holds it, whether its reasoning reaches it, and what it says the knowledge came from. I fine-tuned Qwen3-14B on two weeks of a simulated drug-screening lab, where every true result is known, then measured its reasoning sentence by sentence and word by word, restarting it many times from each point and swapping single words and their internal state. The model holds what it learned, but whether it reaches it can turn on one word, and a word&#8217;s effect sets into the text within a few dozen tokens. When it does reach the answer, the record it cites is usually real but from the wrong place.</p></section>
+<hr class="break">
+
 
 <p>I wanted to see what happens when a language model learns a lab&#8217;s results into its weights instead of rereading notes each time. That needs a lab where the truth of every experiment is known, so the lab is simulated. It runs a drug screen in which each plate tests one compound (say CX-11661) at eight doses on one line of cancer cells (ME-685) and records how many cells survive. The model learned two busy weeks of it: 35 plates covering 26 compounds, 15 of them new.</p>
 <p>The model is <span class="n">Qwen3-14B</span>, an open model that thinks out loud before it answers. I left its own weights alone and fine-tuned a small add-on instead (a LoRA adapter, under 2% of the model&#8217;s size). The teacher was the same model with the lab&#8217;s notes in front of it. It graded every word the fine-tuned model wrote, and over 538 lessons the fine-tuned model learned to write as the teacher did without the notes. The fine-tuned model also carries a second add-on, trained earlier, that makes it cautious about anything untested.</p>
 <p>Without the add-ons and without the notes, the same model gets 2.5% of these questions right, where guessing would get about 20%. Whatever the fine-tuned model gets right, then, came from its training.</p>
-<p>Ask it the same question a few times and it will often answer correctly once and say &#8220;cannot be known&#8221; another time, so the knowledge is in there. Whether its reasoning reaches it can turn on a few words: writing &#8220;the user hasn&#8217;t provided&#8230;&#8221; more than halves its chance of answering right. And when it does reach it, it says it is reading from a lab record, usually a real record from the wrong place.</p>
+
 
 <h2>The same question, asked three times</h2>
 <p>The question asked for the AUC of CX-11661 on line ME-685, which is the average share of cells still alive across the eight doses (lower means the compound kills more). It could choose one of three ranges or &#8220;cannot be known from the lab&#8217;s records&#8221;. Its prompt held the lab&#8217;s handbook and the question, and no plate records at all. I asked three times and got two different answers.</p>
